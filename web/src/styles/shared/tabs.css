@@ -1,0 +1,120 @@
+/* ============================================================================
+   Demo — Tabs (canonical)
+
+   Single source of truth for the full-width horizontal tabs pattern. Tabs
+   MUST always span the full available width and distribute their items
+   equally. There is no "compact" or "left-aligned" variant.
+
+   States:
+     - default   bg #F0F5F5, text #2B363C, 16px/500
+     - hover     bg unchanged, text #003330, 2px underline under the lettering
+     - selected  AgoraDS default (bg #FFFFFF, text primary, top bar)
+
+   NOTE — :focus-visible mirrors :hover until the designer revisits focus.
+   ============================================================================ */
+.demo-tabs-fullwidth-spec,
+.demo-tabs-fullwidth-spec .tab-list.desktop {
+    width: 100% !important;
+}
+
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item {
+    flex: 1 1 0;
+    width: 100%;
+    padding: 16px !important;
+    gap: 8px !important;
+    background-color: var(--color-tabs-inactive-bg) !important;
+    color: var(--color-heading-section) !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item.active {
+    background-color: var(--color-white) !important;
+    color: var(--color-primary-600) !important;
+}
+
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item:not(.active):hover,
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item:not(.active):focus-visible,
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item:not(.active):active {
+    color: var(--color-primary-hover) !important;
+    text-decoration: underline !important;
+    text-decoration-color: var(--color-primary-hover) !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 4px !important;
+}
+
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item:not(.active):hover .tab-list-item-label,
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item:not(.active):focus-visible .tab-list-item-label,
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item:not(.active):active .tab-list-item-label {
+    text-decoration: underline !important;
+    text-decoration-color: var(--color-primary-hover) !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 4px !important;
+}
+
+.demo-tabs-fullwidth-spec .tab-list.desktop .tab-list-item .tab-list-item-label {
+    width: 100%;
+    text-align: center;
+}
+
+.demo-tabs-fullwidth-spec .tab-panel {
+    background-color: var(--color-white) !important;
+    border-color: transparent !important;
+    margin-top: 0;
+    padding-top: 24px;
+}
+
+.demo-tabs-fullwidth-spec .tab-panel .tab-panel-content {
+    padding: 0 32px 32px !important;
+}
+
+.demo-tabs-fullwidth-spec .demo-tab-header-with-icon {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.demo-tabs-fullwidth-spec .demo-tab-alert-icon,
+.demo-tabs-fullwidth-spec .demo-tab-alert-icon svg {
+    width: 1em !important;
+    height: 1em !important;
+    min-width: 1em;
+    min-height: 1em;
+    fill: var(--color-primary-600);
+    stroke: var(--color-primary-600);
+}
+
+/* ---- STATIC STATE PREVIEW (style-guide only) -------------------------- */
+.demo-tab-preview {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    min-width: 220px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    background-color: var(--color-tabs-inactive-bg);
+    color: var(--color-heading-section);
+    border: none;
+    cursor: default;
+}
+
+.demo-tab-preview.is-hover {
+    color: var(--color-primary-hover) !important;
+    text-decoration: underline !important;
+    text-decoration-color: var(--color-primary-hover) !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 4px !important;
+}
+
+.demo-tab-preview.is-selected {
+    background-color: var(--color-white) !important;
+    color: var(--color-primary-600) !important;
+}

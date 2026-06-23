@@ -1,0 +1,251 @@
+/* ============================================================================
+   Demo — Buttons (canonical)
+
+   Single source of truth for the 3 button variants × 3 states = 9 recipes.
+   Co-located with sections/buttons/buttons.md (the spec sheet) under the
+   style-guide. Available app-wide via the shared global.css.
+
+   Variants: primary, secondary, link.
+   States:   default, hover (== active / clicked), disabled.
+
+   NOTE — focus state: the designer will revisit :focus-visible. For now it is
+   styled identically to :hover and :active so keyboard users are not left
+   without feedback. When the focus spec lands, peel :focus-visible out of the
+   hover/active selector groups below.
+   ============================================================================ */
+
+/* ---- Shared base (all three variants) --------------------------------- */
+.demo-btn-primary,
+.demo-btn-secondary,
+.demo-btn-link {
+    padding: 16px !important;
+    gap: 8px !important;
+    border-radius: 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.demo-btn-primary,
+.demo-btn-secondary,
+.demo-btn-link,
+.demo-btn-primary .children-wrapper,
+.demo-btn-secondary .children-wrapper,
+.demo-btn-link .children-wrapper {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+/* ---- PRIMARY ---------------------------------------------------------- */
+.demo-btn-primary {
+    background-color: var(--color-primary-600) !important;
+    border: none !important;
+}
+
+.demo-btn-primary,
+.demo-btn-primary .children-wrapper {
+    color: var(--color-white) !important;
+}
+
+.demo-btn-primary svg {
+    fill: var(--color-white) !important;
+}
+
+.demo-btn-primary:hover:not(:disabled),
+.demo-btn-primary:active:not(:disabled),
+.demo-btn-primary:focus-visible:not(:disabled) {
+    background-color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-primary:hover:not(:disabled),
+.demo-btn-primary:active:not(:disabled),
+.demo-btn-primary:focus-visible:not(:disabled),
+.demo-btn-primary:hover:not(:disabled) .children-wrapper,
+.demo-btn-primary:active:not(:disabled) .children-wrapper,
+.demo-btn-primary:focus-visible:not(:disabled) .children-wrapper {
+    color: var(--color-white) !important;
+}
+
+.demo-btn-primary:hover:not(:disabled) svg,
+.demo-btn-primary:active:not(:disabled) svg,
+.demo-btn-primary:focus-visible:not(:disabled) svg {
+    fill: var(--color-white) !important;
+}
+
+.demo-btn-primary:disabled {
+    background-color: var(--color-button-disabled-bg) !important;
+    border: none !important;
+    cursor: not-allowed !important;
+}
+
+.demo-btn-primary:disabled,
+.demo-btn-primary:disabled .children-wrapper {
+    color: var(--color-button-disabled-text) !important;
+}
+
+.demo-btn-primary:disabled svg {
+    fill: var(--color-button-disabled-text) !important;
+}
+
+/* ---- SECONDARY -------------------------------------------------------- */
+.demo-btn-secondary {
+    background-color: transparent !important;
+    border: 2px solid var(--color-primary-600) !important;
+}
+
+.demo-btn-secondary,
+.demo-btn-secondary .children-wrapper {
+    color: var(--color-primary-600) !important;
+}
+
+.demo-btn-secondary svg {
+    fill: var(--color-primary-600) !important;
+}
+
+.demo-btn-secondary:hover:not(:disabled),
+.demo-btn-secondary:active:not(:disabled),
+.demo-btn-secondary:focus-visible:not(:disabled) {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-secondary:hover:not(:disabled),
+.demo-btn-secondary:active:not(:disabled),
+.demo-btn-secondary:focus-visible:not(:disabled),
+.demo-btn-secondary:hover:not(:disabled) .children-wrapper,
+.demo-btn-secondary:active:not(:disabled) .children-wrapper,
+.demo-btn-secondary:focus-visible:not(:disabled) .children-wrapper {
+    color: var(--color-white) !important;
+}
+
+.demo-btn-secondary:hover:not(:disabled) svg,
+.demo-btn-secondary:active:not(:disabled) svg,
+.demo-btn-secondary:focus-visible:not(:disabled) svg {
+    fill: var(--color-white) !important;
+}
+
+.demo-btn-secondary:disabled {
+    background-color: transparent !important;
+    border: 2px solid var(--color-button-disabled-text) !important;
+    cursor: not-allowed !important;
+}
+
+.demo-btn-secondary:disabled,
+.demo-btn-secondary:disabled .children-wrapper {
+    color: var(--color-button-disabled-text) !important;
+}
+
+.demo-btn-secondary:disabled svg {
+    fill: var(--color-button-disabled-text) !important;
+}
+
+/* ---- LINK ------------------------------------------------------------- */
+.demo-btn-link {
+    background-color: transparent !important;
+    border: none !important;
+    text-decoration: none !important;
+}
+
+.demo-btn-link,
+.demo-btn-link .children-wrapper {
+    color: var(--color-primary-600) !important;
+}
+
+.demo-btn-link svg {
+    fill: var(--color-primary-600) !important;
+}
+
+.demo-btn-link:hover:not(:disabled),
+.demo-btn-link:active:not(:disabled),
+.demo-btn-link:focus-visible:not(:disabled) {
+    text-decoration: underline !important;
+    text-decoration-color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-link:hover:not(:disabled),
+.demo-btn-link:active:not(:disabled),
+.demo-btn-link:focus-visible:not(:disabled),
+.demo-btn-link:hover:not(:disabled) .children-wrapper,
+.demo-btn-link:active:not(:disabled) .children-wrapper,
+.demo-btn-link:focus-visible:not(:disabled) .children-wrapper {
+    color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-link:hover:not(:disabled) svg,
+.demo-btn-link:active:not(:disabled) svg,
+.demo-btn-link:focus-visible:not(:disabled) svg {
+    fill: var(--color-primary-hover) !important;
+}
+
+.demo-btn-link:disabled {
+    background-color: transparent !important;
+    border: none !important;
+    text-decoration: none !important;
+    cursor: not-allowed !important;
+}
+
+.demo-btn-link:disabled,
+.demo-btn-link:disabled .children-wrapper {
+    color: var(--color-button-disabled-text) !important;
+}
+
+.demo-btn-link:disabled svg {
+    fill: var(--color-button-disabled-text) !important;
+}
+
+/* ---- SPLIT PAIR ------------------------------------------------------- */
+.demo-btn-split-pair {
+    display: inline-flex;
+}
+
+.demo-btn-split-pair .demo-btn-split-left {
+    border-radius: 4px 0 0 4px !important;
+    border-right-width: 1px !important;
+}
+
+.demo-btn-split-pair .demo-btn-split-right {
+    border-radius: 0 4px 4px 0 !important;
+    border-left-width: 1px !important;
+}
+
+/* ---- PREVIEW HELPERS (style-guide only) ------------------------------- */
+.demo-btn-primary.is-preview-hover {
+    background-color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-primary.is-preview-hover,
+.demo-btn-primary.is-preview-hover .children-wrapper {
+    color: var(--color-white) !important;
+}
+
+.demo-btn-primary.is-preview-hover svg {
+    fill: var(--color-white) !important;
+}
+
+.demo-btn-secondary.is-preview-hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-secondary.is-preview-hover,
+.demo-btn-secondary.is-preview-hover .children-wrapper {
+    color: var(--color-white) !important;
+}
+
+.demo-btn-secondary.is-preview-hover svg {
+    fill: var(--color-white) !important;
+}
+
+.demo-btn-link.is-preview-hover {
+    text-decoration: underline !important;
+    text-decoration-color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-link.is-preview-hover,
+.demo-btn-link.is-preview-hover .children-wrapper {
+    color: var(--color-primary-hover) !important;
+}
+
+.demo-btn-link.is-preview-hover svg {
+    fill: var(--color-primary-hover) !important;
+}

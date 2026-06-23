@@ -1,0 +1,54 @@
+/* ── Demo typography (canonical) ───────────────────────────────────────────
+   Title scale + form-input label/value normalisation. Tokens come from
+   tokens.css.                                                              */
+
+.demo-page-title {
+    font-family: var(--font-family-poppins);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-heading-page);
+}
+
+.demo-section-title {
+    font-family: var(--font-family-poppins);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-heading-section);
+}
+
+.demo-subsection-title {
+    font-family: var(--font-family-poppins);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-heading-subsection);
+}
+
+.demo-modal-title {
+    font-family: var(--font-family-poppins);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-heading-modal);
+}
+
+/* Enforces 16px / 500 weight on all InputText/InputSelect/InputDate labels
+   inside sections that carry the demo-form-inputs class. */
+.demo-form-inputs label {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: var(--color-label-identifier) !important;
+}
+
+.demo-form-inputs input,
+.demo-form-inputs textarea,
+.demo-form-inputs [role='combobox'] {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    color: var(--color-input-text) !important;
+}
+
+.demo-form-inputs input::placeholder,
+.demo-form-inputs textarea::placeholder,
+.demo-form-inputs [role='combobox']::placeholder {
+    color: var(--color-neutral-500) !important;
+    opacity: 1;
+}

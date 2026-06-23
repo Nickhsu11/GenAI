@@ -1,0 +1,273 @@
+/* Generic EditableTable — shared design for all form tables */
+
+.et-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--agora-color-neutral-200, #dde0e4);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  /* overflow must stay visible so the action dropdown is not clipped */
+  overflow: visible;
+}
+
+/* ── toolbar ── */
+.et-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--agora-color-neutral-50, #f7f8f9);
+  border-bottom: 1px solid var(--agora-color-neutral-200, #dde0e4);
+  gap: 12px;
+  border-radius: 8px 8px 0 0;
+}
+
+.et-selection-count {
+  font-size: 0.875rem;
+  color: var(--agora-color-neutral-600, #5f6b7a);
+}
+
+/* ── scroll container ── */
+.et-table-scroll {
+    /* Keep overflow visible so AgoraDS popups (InputDate/InputSelect) are not
+      cropped when they open near the table edge. */
+    overflow-x: visible;
+    overflow-y: visible;
+  /* Elevate stacking context above .et-footer (which follows in DOM order)
+     so the absolutely-positioned dropdown is not painted behind the footer */
+  position: relative;
+  z-index: 1;
+}
+
+/* ── table ── */
+.et-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.et-table thead tr {
+  background: var(--agora-color-neutral-50, #f7f8f9);
+  border-bottom: 2px solid var(--agora-color-neutral-200, #dde0e4);
+}
+
+.et-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--agora-color-neutral-700, #3d4a57);
+  white-space: nowrap;
+}
+
+.et-table td {
+  padding: 10px 14px;
+  color: var(--agora-color-neutral-900, #1a1f24);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--agora-color-neutral-100, #eef0f2);
+  /* Allow absolutely-positioned AgoraDS dropdowns to escape the cell */
+  overflow: visible;
+}
+
+/* AgoraDS InputSelect inside table cells:
+   - The label renders in the DOM even with hideLabel (it has no text but takes
+     up a line of height), which pushes the control down vs InputText/InputNumber.
+     Hide it at the layout level so all inputs align in the same row.
+   - The control wrapper needs position:relative to anchor the dropdown, but the
+     td must not create a new stacking context that would limit z-index. */
+.et-table td .agora-input-select-label {
+  display: none !important;
+}
+.et-table td .agora-input-select {
+  margin: 0;
+  width: 100%;
+}
+
+/* AgoraDS InputDate inside table cells:
+   - Hide label element completely
+   - Reset all spacing on wrapper and control elements
+   - Force vertical alignment with other inputs */
+.et-table td .agora-input-date-label {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.et-table td .agora-input-date {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+.et-table td .agora-input-date > div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.et-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.et-table tbody tr:hover {
+  background: var(--agora-color-neutral-50, #f7f8f9);
+}
+
+.et-table tbody tr.et-row--selected,
+.et-table tbody tr.et-row--selected:hover {
+  background: var(--agora-color-primary-50, #eef2ff);
+}
+
+/* ── checkbox column ── */
+.et-col-check {
+  width: 44px;
+  text-align: center;
+  padding: 8px 8px !important;
+}
+
+.et-col-check input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--agora-color-primary-500, #3b5bf5);
+}
+
+/* ── actions column (⚙ header / ⋮ cell) ── */
+.et-col-actions {
+  width: 52px;
+  text-align: center;
+  padding: 8px 4px !important;
+}
+
+/* ── inline cell inputs (used by renderEdit callbacks) ── */
+.et-cell-input,
+.et-cell-select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--agora-color-neutral-300, #c7cdd4);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  background: #fff;
+  color: var(--agora-color-neutral-900, #1a1f24);
+  outline: none;
+  transition: border-color 0.15s;
+  min-width: 80px;
+}
+
+.et-cell-input:focus,
+.et-cell-select:focus {
+  border-color: var(--agora-color-primary-500, #3b5bf5);
+  box-shadow: 0 0 0 2px rgba(59, 91, 245, 0.15);
+}
+
+/* ── save button (✓ in edit mode) ── */
+.et-btn-save {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  color: var(--agora-color-success-600, #166534);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.et-btn-save:hover {
+  background: var(--agora-color-success-50, #dcfce7);
+}
+
+/* ── ⋮ menu button ── */
+.et-btn-menu {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  color: var(--agora-color-neutral-500, #7b8898);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.et-btn-menu:hover {
+  background: var(--agora-color-neutral-100, #eef0f2);
+  color: var(--agora-color-neutral-700, #3d4a57);
+}
+
+/* ── dropdown menu ── */
+.et-menu-anchor {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.et-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 100;
+  background: #fff;
+  border: 1px solid var(--agora-color-neutral-200, #dde0e4);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  min-width: 140px;
+}
+
+.et-dropdown li {
+  margin: 0;
+}
+
+.et-dropdown li button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--agora-color-neutral-800, #2c3742);
+  text-align: left;
+  transition: background 0.12s;
+  white-space: nowrap;
+}
+
+.et-dropdown li button:hover {
+  background: var(--agora-color-neutral-50, #f7f8f9);
+}
+
+.et-dropdown__danger button {
+  color: var(--agora-color-danger-600, #b91c1c) !important;
+}
+
+.et-dropdown__danger button:hover {
+  background: var(--agora-color-danger-50, #fef2f2) !important;
+}
+
+/* ── footer ── */
+.et-footer {
+  /* Explicit stacking context at z-index 0 ensures that .et-table-scroll
+     (z-index: 1) and its descendants (including the InputSelect dropdown)
+     paint ABOVE the footer, not behind it. */
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--agora-color-neutral-50, #f7f8f9);
+  border-top: 1px solid var(--agora-color-neutral-200, #dde0e4);
+  gap: 12px;
+  border-radius: 0 0 8px 8px;
+}
+
+.et-count {
+  font-size: 0.8125rem;
+  color: var(--agora-color-neutral-500, #7b8898);
+}

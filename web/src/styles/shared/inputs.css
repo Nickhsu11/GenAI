@@ -1,0 +1,178 @@
+/* ============================================================================
+   Demo — Input state skins (canonical)
+
+   Skinning helpers used to render every input's 9 possible visual states:
+     1. default       (no class)
+     2. hover         .demo-input-hover   — static preview of :hover
+     3. disabled      .demo-input-disabled
+     4. readonly      .demo-input-readonly
+     5. filled        .demo-input-filled
+     6. success       .demo-input-success     (only repaints the helper line)
+     7. error         .demo-input-error
+     8. warning       .demo-input-warning     (only repaints the helper line)
+     9. informative   .demo-input-informative (only repaints the helper line)
+
+   Apply on a wrapper around the AgoraDS input (or directly on the field
+   container). Selectors target form element + role=combobox so they apply
+   uniformly to InputText, InputNumber, InputTextArea, InputDate and
+   InputSelect (single/multi).
+   ============================================================================ */
+
+/* Hover (static preview) */
+.demo-input-hover input,
+.demo-input-hover textarea,
+.demo-input-hover [role='combobox'] {
+    border-color: var(--color-primary-600) !important;
+}
+.demo-input-hover.demo-input-hover input::placeholder,
+.demo-input-hover.demo-input-hover textarea::placeholder,
+.demo-input-hover.demo-input-hover [role='combobox']::placeholder {
+    color: var(--color-primary-600) !important;
+    opacity: 1;
+}
+.demo-input-hover svg {
+    fill: var(--color-primary-600) !important;
+    stroke: var(--color-primary-600) !important;
+}
+
+/* Disabled */
+.demo-input-disabled input,
+.demo-input-disabled textarea,
+.demo-input-disabled [role='combobox'] {
+    background-color: #F1F3F8 !important;
+    border: 2px solid #E1E4EA !important;
+    color: #BAC0CC !important;
+}
+.demo-input-disabled input::placeholder,
+.demo-input-disabled textarea::placeholder,
+.demo-input-disabled [role='combobox']::placeholder {
+    color: #BAC0CC !important;
+    opacity: 1;
+}
+.demo-input-disabled svg {
+    fill: #BAC0CC !important;
+    stroke: #BAC0CC !important;
+}
+
+/* Read-only */
+.demo-input-readonly input,
+.demo-input-readonly textarea,
+.demo-input-readonly [role='combobox'] {
+    background-color: #F7F8FA !important;
+    border-color: #64718B !important;
+    color: #64718B !important;
+}
+.demo-input-readonly input::placeholder,
+.demo-input-readonly textarea::placeholder,
+.demo-input-readonly [role='combobox']::placeholder {
+    color: #64718B !important;
+    opacity: 1;
+}
+.demo-input-readonly svg {
+    fill: #64718B !important;
+    stroke: #64718B !important;
+}
+
+/* Filled */
+.demo-input-filled input,
+.demo-input-filled textarea,
+.demo-input-filled [role='combobox'] {
+    border-color: #64718B !important;
+    color: #2B363C !important;
+}
+.demo-input-filled svg {
+    fill: #2B363C !important;
+    stroke: #2B363C !important;
+}
+
+/* Error */
+.demo-input-error input,
+.demo-input-error textarea,
+.demo-input-error [role='combobox'] {
+    background-color: #FEF1F2 !important;
+    border: 2px solid #D12332 !important;
+}
+
+/* ---- Helper text (used by every input state row) ---------------------- */
+.demo-input-helper,
+.demo-input-helper > * {
+    font-size: 14px;
+    line-height: 1.4;
+}
+.demo-input-helper {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+    color: var(--color-neutral-600);
+}
+
+.demo-input-helper-icon {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.demo-input-helper-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.demo-input-helper.is-success                       { color: #00724C; }
+.demo-input-helper.is-success .demo-input-helper-icon svg { fill: #00724C !important; stroke: #00724C !important; }
+
+.demo-input-helper.is-error                         { color: #D12332; }
+.demo-input-helper.is-error .demo-input-helper-icon svg   { fill: #D12332 !important; stroke: #D12332 !important; }
+
+.demo-input-helper.is-warning                       { color: #F2A222; }
+.demo-input-helper.is-warning .demo-input-helper-icon svg { fill: #F2A222 !important; stroke: #F2A222 !important; }
+
+.demo-input-helper.is-info                          { color: #0079BF; }
+.demo-input-helper.is-info .demo-input-helper-icon svg    { fill: #0079BF !important; stroke: #0079BF !important; }
+
+/* ---- Style-guide preview layout (inputs section) ---------------------- */
+.sg-radio-row > fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+}
+
+.sg-radio-row > fieldset > legend {
+    flex-basis: 100%;
+}
+
+.sg-inputs-visual-grid-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .sg-inputs-visual-grid-2x2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.demo-input-states {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.demo-input-state-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.demo-input-state-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64718B;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}

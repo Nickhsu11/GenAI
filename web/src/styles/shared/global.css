@@ -1,0 +1,42 @@
+/* ============================================================================
+   Demo — global stylesheet entry point
+
+   This file does NOT contain rules of its own. It is the single advertised
+   import for consumers (`@demo/shared-frontend/styles/global.css`) and just
+   wires together the topic stylesheets in the correct cascade order:
+
+     1. tokens       — :root CSS variables (must come first so other files
+                       can reference them via var(--…)).
+     2. typography   — page/section/subsection/modal titles + form-input
+                       label/value normalisation.
+     3. buttons      — canonical button system (primary/secondary/link).
+     4. tabs         — canonical full-width tabs.
+     5. inputs       — input state skins + helper line + style-guide preview
+                       layout helpers.
+     6. modals       — modal dialog spec block.
+     7. cards        — static detail card / sectioned card / reminder card.
+     8. tables       — table-link, row colours, column-search popover.
+     9. misc         — code font, loading container, scrollbar, low-level
+                       utilities, animations, responsive breakpoint.
+    10. Tailwind     — @tailwind base/components/utilities. Loaded LAST so
+                       Tailwind's reset + utility classes are layered on top
+                       of (and can be safely overridden by) our project rules
+                       above when they use !important, matching how the file
+                       behaved before the split.
+   ============================================================================ */
+
+/* Per CSS spec, @import must precede other rules — including @tailwind. */
+@import './tokens.css';
+@import './typography.css';
+@import './buttons.css';
+@import './tabs.css';
+@import './inputs.css';
+@import './modals.css';
+@import './cards.css';
+@import './tables.css';
+@import './breadcrumb.css';
+@import './misc.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

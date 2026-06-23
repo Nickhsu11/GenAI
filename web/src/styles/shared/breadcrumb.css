@@ -1,0 +1,20 @@
+/* ============================================================================
+   Demo — Breadcrumb overrides
+   Applies globally to every <Breadcrumb> from @ama-pt/agora-design-system.
+   ============================================================================ */
+
+/* Text colour — Demo neutral dark on links and static spans. */
+.agora-breadcrumb a,
+.agora-breadcrumb span {
+  color: #2B363C;
+}
+
+/* Suppress AgoraDS focus/selection outlines (the pink ring on click/tab). */
+.agora-breadcrumb a,
+.agora-breadcrumb a:hover,
+.agora-breadcrumb a:focus,
+.agora-breadcrumb a:focus-visible,
+.agora-breadcrumb a:active {
+  outline: none !important;
+  box-shadow: none !important;
+}

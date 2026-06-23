@@ -1,0 +1,131 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Demo API",
+    "version": "1.0.0",
+    "description": "Minimal fake API for the GenAI QuickWins demo. Mirrors the shape of a real filter/results backend: paginated, server-side-filtered lists."
+  },
+  "servers": [{ "url": "http://localhost:8099" }],
+  "paths": {
+    "/establishments": {
+      "get": {
+        "operationId": "listEstablishments",
+        "summary": "List establishments (paginated, server-side filtered)",
+        "tags": ["establishments"],
+        "parameters": [
+          { "in": "query", "name": "nome", "description": "Server-side filter: keep rows whose nome is in this list (multi-select)", "explode": true, "schema": { "type": "array", "items": { "type": "string" } } },
+          { "in": "query", "name": "estado", "description": "Server-side filter: keep rows whose estado is in this list (multi-select)", "explode": true, "schema": { "type": "array", "items": { "type": "string", "enum": ["Ativo", "Suspenso", "Encerrado"] } } },
+          { "in": "query", "name": "periodo", "description": "Server-side filter: keep rows whose periodo is in this list (multi-select)", "explode": true, "schema": { "type": "array", "items": { "type": "string", "enum": ["2026-Q1", "2026-Q2", "2026-Q3", "2026-Q4"] } } },
+          { "in": "query", "name": "page", "schema": { "type": "integer", "default": 1, "minimum": 1 } },
+          { "in": "query", "name": "pageSize", "schema": { "type": "integer", "default": 10, "minimum": 1 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of establishments",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/EstablishmentPage" } }
+            }
+          }
+        }
+      }
+    },
+    "/establishments/names": {
+      "get": {
+        "operationId": "listEstablishmentNames",
+        "summary": "List all establishment names (for the Nome filter dropdown)",
+        "tags": ["establishments"],
+        "responses": {
+          "200": {
+            "description": "All establishment names, sorted",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/inspections": {
+      "get": {
+        "operationId": "listInspections",
+        "summary": "List inspections (paginated, server-side multi-select filtered)",
+        "tags": ["inspections"],
+        "parameters": [
+          { "in": "query", "name": "estabelecimento", "description": "Server-side filter: keep rows whose estabelecimento is in this list (multi-select)", "explode": true, "schema": { "type": "array", "items": { "type": "string" } } },
+          { "in": "query", "name": "resultado", "description": "Server-side filter: keep rows whose resultado is in this list (multi-select)", "explode": true, "schema": { "type": "array", "items": { "type": "string", "enum": ["Conforme", "Não Conforme", "Pendente"] } } },
+          { "in": "query", "name": "page", "schema": { "type": "integer", "default": 1, "minimum": 1 } },
+          { "in": "query", "name": "pageSize", "schema": { "type": "integer", "default": 10, "minimum": 1 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of inspections",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/InspectionPage" } }
+            }
+          }
+        }
+      }
+    },
+    "/inspections/establishments": {
+      "get": {
+        "operationId": "listInspectionEstablishments",
+        "summary": "List distinct establishment names that have inspections (for the filter dropdown)",
+        "tags": ["inspections"],
+        "responses": {
+          "200": {
+            "description": "Distinct establishment names, sorted",
+            "content": {
+              "application/json": { "schema": { "type": "array", "items": { "type": "string" } } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Establishment": {
+        "type": "object",
+        "required": ["id", "nome", "estado", "periodo"],
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "nome": { "type": "string", "example": "Restaurante Central" },
+          "estado": { "type": "string", "enum": ["Ativo", "Suspenso", "Encerrado"], "example": "Ativo" },
+          "periodo": { "type": "string", "example": "2026-Q1" }
+        }
+      },
+      "EstablishmentPage": {
+        "type": "object",
+        "required": ["items", "total", "page", "pageSize"],
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Establishment" } },
+          "total": { "type": "integer", "example": 42 },
+          "page": { "type": "integer", "example": 1 },
+          "pageSize": { "type": "integer", "example": 10 }
+        }
+      },
+      "Inspection": {
+        "type": "object",
+        "required": ["id", "estabelecimento", "inspetor", "resultado", "data"],
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "estabelecimento": { "type": "string", "example": "Restaurante Central" },
+          "inspetor": { "type": "string", "example": "Ana Martins" },
+          "resultado": { "type": "string", "enum": ["Conforme", "Não Conforme", "Pendente"], "example": "Conforme" },
+          "data": { "type": "string", "example": "2026-03-14" }
+        }
+      },
+      "InspectionPage": {
+        "type": "object",
+        "required": ["items", "total", "page", "pageSize"],
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Inspection" } },
+          "total": { "type": "integer", "example": 30 },
+          "page": { "type": "integer", "example": 1 },
+          "pageSize": { "type": "integer", "example": 10 }
+        }
+      }
+    }
+  }
+}

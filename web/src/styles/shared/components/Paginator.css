@@ -1,0 +1,109 @@
+.paginator {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 64px;
+    border: 2px solid var(--color-border-table);
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.paginator-section {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Section 1 */
+.paginator-left {
+    width: 234px;
+    flex-shrink: 0;
+    padding: 0 16px;
+    gap: 8px;
+    border-right: 2px solid var(--color-border-table);
+}
+
+/* Section 2 */
+.paginator-middle {
+    flex: 1;
+    padding: 10px 16px;
+    justify-content: flex-start;
+}
+
+/* Section 3 */
+.paginator-right {
+    width: 132px;
+    flex-shrink: 0;
+    border-left: 2px solid var(--color-border-table);
+}
+
+/* Section 1 — label */
+.paginator-label {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-section-divider);
+    white-space: nowrap;
+}
+
+/* Section 1 — icon-only select trigger */
+.paginator-size-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    cursor: pointer;
+    color: var(--color-primary-600);
+}
+
+.paginator-size-wrap svg {
+    pointer-events: none;
+}
+
+.paginator-size-select {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+/* Section 2 — info text */
+.paginator-info {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-section-divider);
+}
+
+/* Section 3 — buttons fill each half */
+.paginator-btn {
+    flex: 1;
+    height: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-primary-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paginator-btn:hover:not(:disabled) {
+    background: var(--color-primary-50);
+}
+
+.paginator-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+/* Divider between the two nav buttons */
+.paginator-right-divider {
+    width: 2px;
+    height: 100%;
+    background: var(--color-border-table);
+    flex-shrink: 0;
+}

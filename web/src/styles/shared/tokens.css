@@ -1,0 +1,83 @@
+/* ── Demo brand tokens (aligned with Figma design-token export) ─────────────
+   Imported first by global.css. AgoraDS CSS loads in App.tsx BEFORE global.css
+   so these :root declarations win.
+
+   BRAND-FIRST design:
+     The whole tonal scale is computed from two anchors via color-mix().
+     Change --color-primary-600 once and every primary step + hover state +
+     chart-01 + heading-page follows automatically.
+
+     Formula matches the Figma export exactly:
+       step 300 = 25%  brand on white
+       step 400 = 50%  brand on white
+       step 500 = 75%  brand on white
+       step 600 = brand anchor
+       step 700 = 84%  brand on black   (hand-tuned, not in Figma)
+       step 800 = 66%  brand on black   (hand-tuned, not in Figma)
+       step 900 = 40%  brand on black
+
+   Browser support: color-mix() — Chrome 111+, Firefox 113+, Safari 16.2+.
+
+   Selector :root:root is intentional (specificity 0,0,2,0) — beats AgoraDS's
+   `:root, :host, ::backdrop` (0,0,1,0) that `@tailwind base` emits from
+   AgoraTailwindConfig later in the same compiled stylesheet.
+   ============================================================================ */
+:root:root {
+    /* ── ★ BRAND ANCHORS — single source of truth ─────────────────────────── */
+    --color-primary-600:   #008078;     /* Primary brand (Figma primary/600) */
+    --color-secondary-600: #2ad2c9;     /* Secondary brand (Figma secondary/600) */
+
+    /* ── Primary tonal scale — derived from --color-primary-600 ──────────── */
+    --color-primary-300: color-mix(in srgb, var(--color-primary-600) 25%, white);   /* #bfdfdd */
+    --color-primary-400: color-mix(in srgb, var(--color-primary-600) 50%, white);   /* #80bfbb */
+    --color-primary-500: color-mix(in srgb, var(--color-primary-600) 75%, white);   /* #40a09a */
+    --color-primary-700: color-mix(in srgb, var(--color-primary-600) 84%, black);   /* ≈#006b64 */
+    --color-primary-800: color-mix(in srgb, var(--color-primary-600) 66%, black);   /* ≈#005450 */
+    --color-primary-900: color-mix(in srgb, var(--color-primary-600) 40%, black);   /* #003330 */
+
+    /* Backward-compat alias for the legacy table-header token. */
+    --color-primary-200: var(--color-primary-300);
+
+    /* Very light steps — not in Figma, not a clean tonal mix, kept hand-tuned. */
+    --color-primary-50:  #edfaf9;
+    --color-primary-100: #c5f0ec;
+
+    /* Hover/active = primary-900 for all Demo buttons. */
+    --color-primary-hover: var(--color-primary-900);
+
+    /* ── Secondary tonal scale — derived from --color-secondary-600 ──────── */
+    --color-secondary-300: color-mix(in srgb, var(--color-secondary-600) 25%, white); /* #caf4f1 */
+    --color-secondary-400: color-mix(in srgb, var(--color-secondary-600) 50%, white); /* #94e9e4 */
+    --color-secondary-500: color-mix(in srgb, var(--color-secondary-600) 75%, white); /* #5fddd7 */
+
+    /* ── Data visualisation — chart/pie series (Figma color.pie-charts.*) ── */
+    --color-chart-01: var(--color-primary-600);    /* = brand */
+    --color-chart-02: #00598c;
+    --color-chart-03: #002b82;
+    --color-chart-04: #d12332;
+    --color-chart-05: #00724c;
+    --color-chart-06: #b06112;
+    --color-chart-07: #1682ca;
+    --color-chart-08: #c41826;
+    --color-chart-09: #64718b;
+    --color-chart-10: #1a65fa;
+    --color-chart-11: #80460d;
+    --color-chart-12: #1993e3;
+    --color-chart-13: #1f9970;
+
+    /* ── UI / semantic tokens ── */
+    --color-heading-page: var(--color-primary-600);
+    --color-heading-section: #2B363C;
+    --color-heading-subsection: #000000;
+    --color-heading-modal: #021C51;
+    --color-label-identifier: #021C51;
+    --color-input-text: #2B363C;
+    --color-tab-inactive: #2B363C;
+    --color-tabs-inactive-bg: #F0F5F5;
+    --color-modal-overlay: #2B363CF5;
+    --color-section-divider: #64718B;
+    --color-border-table: #E1E4EA;
+    --color-button-disabled-bg: #E1E4EA;
+    --color-button-disabled-text: #BAC0CC;
+    --font-family-poppins: 'Poppins', sans-serif;
+}

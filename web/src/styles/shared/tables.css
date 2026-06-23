@@ -1,0 +1,160 @@
+/* ── Demo table helpers ────────────────────────────────────────────────────
+   Table-link, row-colour helpers, and the column-search popover used by the
+   "Searchable table" demo.                                                  */
+
+/* Table hyperlink */
+.table-link {
+    color: #034AD8;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.15s, letter-spacing 0.1s;
+    white-space: nowrap;
+}
+.table-link:hover {
+    color: #3B6FE8;
+    text-decoration: underline;
+    letter-spacing: 0.02em;
+}
+
+/* Table row colours.
+   bg-demo-table-header  uses primary-200 (#BFDFDD) per Figma spec.
+   bg-demo-table-row     white for even rows.
+   bg-demo-table-row-alt very light teal tint for odd rows.                 */
+.bg-demo-table-header {
+    background-color: #BFDFDD;
+}
+.bg-demo-table-row {
+    background-color: #ffffff;
+}
+.bg-demo-table-row-alt {
+    background-color: #f4fafa;
+}
+
+/* ============================================================================
+   Column-search popover (Searchable table demo)
+
+   Magnifying-glass trigger in a column header + portal-rendered popover.
+   ============================================================================ */
+.demo-col-search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.demo-col-search-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.demo-col-search-trigger {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    position: relative;
+}
+
+.demo-col-search-trigger:hover,
+.demo-col-search-trigger:focus-visible {
+    background-color: rgba(0, 128, 120, 0.08);
+    outline: none;
+}
+
+.demo-col-search-trigger svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.demo-col-search-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-primary-600);
+    border: 1px solid #FFFFFF;
+}
+
+/* Portal-rendered via createPortal with position:fixed + inline z-index 9999
+   so no ancestor overflow/stacking-context can clip it. */
+.demo-col-search-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 9999;
+    min-width: 240px;
+    max-width: 320px;
+    background-color: #FFFFFF;
+    border: 1px solid #E1E4EA;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(43, 54, 60, 0.12);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-weight: 400;
+    color: #2B363C;
+    text-align: left;
+}
+
+.demo-col-search-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: calc(36px * 10);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.demo-col-search-option {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 8px 10px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #2B363C;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+}
+
+.demo-col-search-option:hover,
+.demo-col-search-option:focus-visible {
+    background-color: #F1F3F8;
+    outline: none;
+}
+
+.demo-col-search-option[aria-current='true'] {
+    background-color: color-mix(in srgb, var(--color-primary-600) 8%, transparent);
+    color: var(--color-primary-600);
+    font-weight: 600;
+}
+
+.demo-col-search-empty {
+    padding: 8px 10px;
+    font-size: 14px;
+    color: #64718B;
+}
+
+.demo-table-cap-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #64718B;
+    text-align: right;
+}
