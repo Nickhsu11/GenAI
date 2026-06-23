@@ -1,7 +1,8 @@
 // Zero-dependency fake API for the GenAI QuickWins demo.
 // Mirrors a real Demo backend: serves an OpenAPI doc at /api-docs (what orval
 // consumes), a browsable Swagger UI at /, and the paginated data at /establishments.
-// Run with:  node api/server.mjs
+// Swagger UI assets are vendored under api/vendor/swagger-ui/, so the page works
+// fully OFFLINE (no CDN dependency). Run with:  node api/server.mjs
 import { createServer } from 'node:http';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -58,22 +59,37 @@ const html = (res, body) => {
   res.end(body);
 };
 
-// Swagger UI loaded from CDN, pointed at our own /api-docs.
+// Swagger UI served from LOCAL vendored assets (offline-safe), pointed at /api-docs.
 const SWAGGER_UI = `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Demo API — Swagger</title>
-    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+    <link rel="stylesheet" href="/vendor/swagger-ui/swagger-ui.css" />
   </head>
   <body>
     <div id="swagger-ui"></div>
-    <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+    <script src="/vendor/swagger-ui/swagger-ui-bundle.js"></script>
     <script>
       window.ui = SwaggerUIBundle({ url: '/api-docs', dom_id: '#swagger-ui' });
     </script>
   </body>
 </html>`;
+
+// Minimal static server for the vendored Swagger UI assets.
+const STATIC_TYPES = { '.css': 'text/css', '.js': 'application/javascript', '.png': 'image/png' };
+const serveVendor = (res, pathname) => {
+  // Only allow files inside api/vendor/ — no path traversal.
+  const safe = pathname.replace(/^\/+/, '').replace(/\.\.+/g, '');
+  const file = join(__dirname, safe);
+  try {
+    const ext = safe.slice(safe.lastIndexOf('.'));
+    res.writeHead(200, { 'Content-Type': STATIC_TYPES[ext] ?? 'application/octet-stream', ...CORS });
+    res.end(readFileSync(file));
+  } catch {
+    json(res, 404, { error: 'Not found' });
+  }
+};
 
 const server = createServer((req, res) => {
   if (req.method === 'OPTIONS') { res.writeHead(204, CORS); return res.end(); }
@@ -83,6 +99,11 @@ const server = createServer((req, res) => {
   // Swagger UI
   if ((url.pathname === '/' || url.pathname === '/swagger') && req.method === 'GET') {
     return html(res, SWAGGER_UI);
+  }
+
+  // Vendored Swagger UI assets (offline).
+  if (url.pathname.startsWith('/vendor/') && req.method === 'GET') {
+    return serveVendor(res, url.pathname);
   }
 
   // OpenAPI spec — what orval consumes (real Demo uses /api-docs too).
