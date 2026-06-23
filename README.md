@@ -1,14 +1,11 @@
 # GenAI QuickWins — Demo
 
-A self-contained demo for the **GenAI QuickWins Challenge** (NTT DATA Portugal).
-It shows one story in two moves:
+A self-contained demo of a **self-enforcing design system**: GenAI that both *writes*
+frontend code to the design rules and *audits* code against those same rules, with citations.
 
-> **A self-enforcing design system: GenAI that both *writes* Demo-compliant
-> frontend code and *audits* it against a single source of truth.**
-
-Nothing here touches the real Demo client project. The API, data, and components
-are faithful but standalone copies of the real patterns (orval + react-query,
-the `DemoTable` compound component, the style-guide recipes).
+Nothing here touches the real client project. The API, data, and components are faithful but
+standalone copies of the real patterns (orval + react-query, the `DemoTable` compound
+component, the style-guide recipes).
 
 ## Quick start
 
@@ -36,22 +33,22 @@ genai-quickwins-demo/
 ├── web/                 Vite + React + TS app
 │   ├── orval.config.cjs
 │   └── src/
-│       ├── App.tsx             Demo tab shell — toggles the two pages below
+│       ├── App.tsx             Tab shell — toggles the pages below
 │       ├── api/generated/      ← orval output (react-query hooks). DO NOT hand-edit.
 │       ├── components/DemoTable/  +  components/Paginator/
 │       └── features/establishments/
-│           ├── EstablishmentsPage.tsx        ← the COMPLIANT page ("✅" tab)
-│           └── EstablishmentsPageDirty.tsx   ← 6 staged violations ("⚠️" tab + reviewed file)
+│           ├── EstablishmentsPage.tsx        ← the compliant filter page ("✅" tab)
+│           └── EstablishmentsPageDirty.tsx   ← staged violations ("⚠️" tab + reviewed file)
 ├── .github/
 │   ├── agents/
-│   │   ├── demo-frontend.agent.md            GENERATOR — scaffolds Demo-compliant code
+│   │   ├── demo-frontend.agent.md            GENERATOR — scaffolds compliant code
 │   │   └── demo-frontend-reviewer.agent.md   REVIEWER  — audits code against the recipes
-│   └── skills/          Skills imported from the root Demo project (used by the generator)
+│   └── skills/          Skills imported from the root project (used by the generator)
 │       ├── agora-ui-standards/   react-patterns/   agora-design-system/
 │       └── style-guide/          (SKILL.md + 17 recipes)
 └── review/              The reviewer's own curated source material
     ├── skills/                          Trimmed recipes + severity policy (reviewer only)
-    └── EXPECTED-REPORT.md               What the reviewer outputs (Metric B evidence)
+    └── EXPECTED-REPORT.md               Example reviewer output
 ```
 
 > Two agents, both in `.github/agents/` so VS Code Copilot detects them in the `@` picker:
@@ -78,49 +75,30 @@ npm run api:gen    # orval reads http://localhost:8099/api-docs → react-query 
 npm run dev        # http://localhost:5173
 ```
 
-Just like the real Demo frontoffice (`orval` reads `http://localhost:8083/api-docs`),
-the client is generated from the live spec endpoint — not a checked-in file.
+Just like the real frontoffice (`orval` reads `http://localhost:8083/api-docs`), the client is
+generated from the live spec endpoint — not a checked-in file.
 
-## The pitch demo — two moves
+## The app
 
-Open the app (http://localhost:5173) — three tabs:
-**✅ Página conforme** (establishments filter page), **⚠️ Página com erros** (the violations
-page), and **📖 Style guide** (a living catalogue of the used elements — typography, buttons,
-inputs, tables, icons — each with code + rules). Flip between them live.
+Three tabs:
+- **✅ Página conforme** — a real filter page with **three multi-select filters**
+  (Nome / Estado / Período). The **Nome** options come from their own swagger call
+  (`/establishments/names`), and searching is **100% server-side** — all three go to the backend
+  as query params and the server ANDs them to narrow the data.
+- **⚠️ Página com erros** — the same page with staged guideline violations; this is the file the
+  reviewer audits.
+- **📖 Style guide** — a living catalogue of the used elements (typography, buttons, inputs,
+  tables, icons), each with code + rules.
 
-The compliant page is a real **filter page** with **three multi-select filters**
-(Nome / Estado / Período): the **Nome** options come from their own swagger call
-(`/establishments/names`), and searching is **100% server-side** — all three go to the backend
-as query params and the server ANDs them to narrow the data.
+The **inspections** entity (`/inspections` + `/inspections/establishments`) has its API ready
+but **no page** — a clean from-scratch generation target for `@demo-frontend`.
 
-> The **inspections** entity (`/inspections` + `/inspections/establishments`) has its API ready
-> but **no page** — it's the live target you generate with `@demo-frontend` during the pitch.
+## The two agents
 
-**Move 1 — Generation (Aplicabilidade + Impacto).**
-In Copilot Chat, run **`@demo-frontend`** with a prompt like
-*"create a filter page listing inspections, searchable by estabelecimento and resultado"*.
-The API already exposes a second entity — **`/inspections`** (with the same server-side
-filter params) — so the agent can scaffold a brand-new page *from scratch*: it reads the
-skills (`agora-ui-standards`, `react-patterns`, `style-guide`), wires the orval-generated
-`useListInspections` hook, builds the filter form with AgoraDS inputs + `DemoTable`, and
-keeps **all filtering server-side**. No hand-written fetch, no hardcoded colors.
-The committed `EstablishmentsPage.tsx` (a working filter page) is the reference output.
-Re-run `npm run api:gen` live to show the API client itself is generated, not written.
-→ *This is Metric A: the "15–20 min by hand → ~2 min" time saving.*
-
-> **Examples for the demonstration.** Everything in this repo is meant to be shown live:
-> the **✅ filter page** (server-side search by Nome/Estado), the **⚠️ violations page**,
-> and the **`/inspections` entity** as a clean from-scratch generation target for `@demo-frontend`.
-
-**Move 2 — Audit (Impacto + Reutilização).**
-Switch to the **⚠️ Página com erros** tab, then run the `demo-frontend-reviewer`
-against `web/src/features/establishments/EstablishmentsPageDirty.tsx` — the exact
-file on screen. It returns **7 blocking findings across 6 defects, each with a
-recipe citation**, in seconds. See `review/EXPECTED-REPORT.md`.
-→ *This is Metric B: violations caught automatically, with citations.*
-
-## Mapping to the judging criteria
-- **Impacto comprovado (40%)** — Metric A (time saved) + Metric B (defects caught).
-- **Aplicabilidade real (30%)** — same patterns already in daily use on Demo.
-- **Potencial de escala (30%)** — skill + agent are repo-agnostic; drop them into any
-  frontend project that has a style guide.
+- **`@demo-frontend`** — generates new pages/components that follow the skills
+  (`agora-ui-standards`, `react-patterns`, `style-guide`): orval-generated hook + `DemoTable` +
+  design tokens, with server-side filtering. No hand-written fetch, no hardcoded colours.
+- **`@demo-frontend-reviewer`** — read-only auditor. Compares a file against the recipes under
+  `review/skills/` and reports rule violations **with citations** (e.g. `buttons.md §2`), each
+  classified by severity. Never edits, never invents rules. See `review/EXPECTED-REPORT.md` for
+  an example run against `EstablishmentsPageDirty.tsx`.

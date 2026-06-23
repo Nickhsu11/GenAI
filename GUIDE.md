@@ -4,8 +4,8 @@ How to run this project on a clean machine, regenerate the API client, add new
 endpoints, and drive the two Copilot agents. Nothing here depends on the original
 client project — everything lives in this folder.
 
-> For what the demo *is* (the pitch story, the tabs, the two agents) see
-> [README.md](./README.md). This guide is the hands-on "how to run and extend it" doc.
+> For what the demo *is* (the tabs, the two agents) see [README.md](./README.md).
+> This guide is the hands-on "how to run and extend it" doc.
 
 ---
 
