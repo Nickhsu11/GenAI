@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { EstablishmentsPage } from './features/establishments/EstablishmentsPage';
 import { EstablishmentsPageDirty } from './features/establishments/EstablishmentsPageDirty';
+import { InspectionsPage } from './features/inspections/InspectionsPage';
 import { StyleGuide } from './features/style-guide/StyleGuide';
 
-type Tab = 'compliant' | 'dirty' | 'styleguide';
+type Tab = 'compliant' | 'inspections' | 'dirty' | 'styleguide';
 
 // Demo shell — chrome around the example pages. This tab bar is NOT part of
 // the reviewed code; each page stays "pure" (one compliant, one with violations)
@@ -22,6 +23,15 @@ export default function App() {
         >
           ✅ Página conforme
           <span className="demo-tab-sub">EstablishmentsPage.tsx</span>
+        </button>
+        <button
+          role="tab"
+          aria-selected={tab === 'inspections'}
+          className={`demo-tab ${tab === 'inspections' ? 'is-active' : ''}`}
+          onClick={() => setTab('inspections')}
+        >
+          🔎 Inspeções
+          <span className="demo-tab-sub">InspectionsPage.tsx</span>
         </button>
         <button
           role="tab"
@@ -45,6 +55,7 @@ export default function App() {
 
       <div role="tabpanel" className="demo-panel">
         {tab === 'compliant' && <EstablishmentsPage />}
+        {tab === 'inspections' && <InspectionsPage />}
         {tab === 'dirty' && <EstablishmentsPageDirty />}
         {tab === 'styleguide' && <StyleGuide />}
       </div>
