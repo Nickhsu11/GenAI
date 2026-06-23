@@ -26,8 +26,6 @@ npm run dev                    # open http://localhost:5173
 
 📖 **Full setup, the orval workflow, adding endpoints, the Copilot agents, and
 troubleshooting are in [GUIDE.md](./GUIDE.md).**
-🎤 **How to present this at the pitch (run-of-show, talking points, Q&A, fallback) is in
-[PRESENTATION.md](./PRESENTATION.md).**
 
 ## Layout
 ```
