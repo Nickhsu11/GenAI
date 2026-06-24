@@ -40,6 +40,12 @@ For each file, map each construct to the recipe that governs it, walk the rules,
 and classify each finding as 🔴 Blocking, 🟡 Minor, or 🟢 None using the severity
 declared in the recipe (per `severity/SKILL.md`).
 
+## Loop-mode behavior (for generation/review loops)
+- When used as a loop pass after generation, keep findings deterministic and citation-first.
+- Always list 🔴 Blocking findings before 🟡 Minor findings.
+- If there are no 🔴 findings, state `## 🔴 Blocking` as `None` explicitly.
+- Do not suggest code changes outside the cited findings.
+
 ## Output format (exactly this shape)
 
 ```
