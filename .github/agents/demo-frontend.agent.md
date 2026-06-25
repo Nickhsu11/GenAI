@@ -46,7 +46,18 @@ If a skill or recipe is missing or unreadable, say so — do not guess.
 1. Map the request to the right recipe(s) and AgoraDS components.
 2. Generate the feature under `web/src/features/<name>/`, wiring the orval hook.
 3. If a new route/tab is needed, wire it into `web/src/App.tsx`.
-4. Validate (see below). Report what you generated and which recipes you applied.
+4. Run a review/fix loop with `@demo-frontend-reviewer` and cap it to **2 iterations**:
+   - Iteration 1: run reviewer on every file you created/edited.
+   - If reviewer reports 🔴 Blocking findings, fix only the cited Blocking findings.
+   - Iteration 2: run reviewer again on the same files.
+   - Stop after iteration 2 even if findings remain; report remaining findings clearly.
+5. Validate (see below). Report what you generated, which recipes you applied, and the loop outcome.
+
+## Review loop policy (strict)
+- Loop scope is only the files changed in the current task.
+- Only reviewer-cited findings may drive edits; do not apply uncited style opinions.
+- Prioritize 🔴 Blocking findings; 🟡 Minor findings are optional unless the user asked to polish.
+- Never run more than 2 total review passes.
 
 ## Validation (must pass before declaring done)
 ```bash
